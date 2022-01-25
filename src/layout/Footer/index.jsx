@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { Container, useMediaQuery, useTheme } from '@material-ui/core';
-// import Logo from '../../assets/images/dimwits-logo.png';
-import { colors } from '../../assets/colors/index';
+import { colors, fonts } from '../../styles';
+// import Logo from '../../assets/images/logo.png';
+// import SocialSection from '../../components';
 const pack = require('../../../package.json');
 
 const CommonFooter = () => {
@@ -12,11 +13,10 @@ const CommonFooter = () => {
   return (
     <div className={classes.footer}>
         <Container className={classes.container}>
-            <div className={classes.navigationBar}>
+            <div className={classes.footerBar}>
                 {/* <img src={Logo} className={classes.logo} /> */}
-                <div className={classes.linkSection}>
-
-                </div>
+                <p className={classes.footerText}>{`© ${new Date().getFullYear()}, Barak's MUI - CRA Template`}</p> 
+                {/* <SocialSection /> */}
             </div>
         </Container>
     </div>
@@ -25,24 +25,20 @@ const CommonFooter = () => {
 
 const useStyles = makeStyles(theme => ({
   container: {
-    height: 138,
-    maxWidth: 1484,
-    display: 'flex',
     width: '100%',
-    [theme.breakpoints.down('sm')]: {
-      justifyContent: 'center',
-      height: 211,
-    }
+    maxWidth: 1400,
+    display: 'flex',
+    height: 40,
   },
   footer: {
-    backgroundColor: colors.primaryBlue,
+    backgroundColor: colors.red,
   },
   logo :{
     height: 104,
   },
-  navigationBar: {
+  footerBar: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
     alignItems: 'center',
     height: '100%',
@@ -51,22 +47,10 @@ const useStyles = makeStyles(theme => ({
       justifyContent: 'flex-start'
     }
   },
-  linkSection :{
-    display: 'flex',
+  footerText: {
+    color: colors.white,
+    fontFamily: fonts.Poppins,
   },
-  navLink: {
-    fontSize: 19,
-    fontWeight: 400,
-    color: 'white',
-  },
-  brandedAF: {
-    height: 106,
-    cursor: 'pointer',
-    [theme.breakpoints.down('sm')]:{
-      height: 92,
-      width: '100%',
-    }
-  }
 }))
 
 export default CommonFooter

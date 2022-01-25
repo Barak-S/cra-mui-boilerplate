@@ -1,39 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Container, useMediaQuery, useTheme } from '@material-ui/core';
-import { colors } from '../../assets/colors/index';
-// import Logo from '../../assets/images/dimwits-logo.png';
-// import LogoDark from './assets/logo-dark.png';
+import { colors, fonts } from '../../styles';
 import { FiMenu, FiX } from 'react-icons/fi';
-// import SocialSection from '../../components/SocialSection';
+import { useHistory, Link } from 'react-router-dom';
+import { routes } from '../../core';
+// import Logo from '../../assets/images/logo.png';
+// import SocialSection from '../../components';
 
 
-const NavBar = ({ handleNavClick }) => {
-    const theme = useTheme()
-    const classes = useStyles()
-    const [open, setOpen] = useState(false)
-    const [blur, handleblur] = useState(false);
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    
-    const handleMenuItemClick = (pageRef) => {
-        handleNavClick && handleNavClick(pageRef)
-    }
-
-    useEffect(()=>{
-        window.addEventListener('scroll', ()=>{
-            if (window.scrollY > window.screen.height){
-                handleblur(true)
-            } else {
-                handleblur(false)
-            }
-        })
-        return ()=>{
-            window.removeEventListener('scroll')
-        }
-    }, [])
+const NavBar = () => {
+    const theme = useTheme();
+    const classes = useStyles();
+    const history = useHistory();
+    const [open, setOpen] = useState(false);
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm')); 
 
     return (
-        <AppBar position="fixed" className={classes.appBar} style={{ backdropFilter: blur ? 'blur(6px)' : 'none' }}>
+        <AppBar position="fixed" className={classes.appBar}>
             <Container className={classes.container}>
                 <div className={classes.navigationBar}>
                     {isMobile && (
@@ -42,12 +26,18 @@ const NavBar = ({ handleNavClick }) => {
                         :
                         (<FiMenu size={32} color={colors.white} className={classes.menuToggle} onClick={()=>setOpen(true)} />)
                     )}
-                    {/* <img src={isMobile && open ? LogoDark : Logo} style={{ height: isMobile && open ? 70 : 104 }} /> */}
+                    {/* <img 
+                            src={Logo} 
+                            onClick={()=>history.push(routes.index)}
+                            style={{ 
+                                height: isMobile ? 70 : 90 
+                            }} 
+                        /> */}
                     <div className={classes.linkSection}>
-                        <NavMenuItem handleClick={()=>handleMenuItemClick('about')} label={'About'} />
-                        <NavMenuItem handleClick={()=>handleMenuItemClick('gallery')} label={'Gallery'} />
-                        <NavMenuItem handleClick={()=>handleMenuItemClick('roadmap')} label={'Roadmap'} />
-                        <NavMenuItem handleClick={()=>handleMenuItemClick('team')} label={'Team'} />
+                        <NavMenuItem label={'About'} />
+                        <NavMenuItem label={'Gallery'} />
+                        <NavMenuItem label={'Roadmap'} />
+                        <NavMenuItem label={'Team'} />
                         {/* <SocialSection style={{ marginLeft: 62 }} /> */}
                     </div>
                 </div>
@@ -55,10 +45,10 @@ const NavBar = ({ handleNavClick }) => {
             {isMobile ? (
                 <div className={classes.mobileMenu} style={{ transform: open ? 'translateX(0%)' : 'translateY(-100%)', transition: '0.3s ease'}}>
                     <div className={classes.linkSectionMobile}>
-                        <NavMenuItem handleClick={()=>{setOpen(false); handleMenuItemClick('about')}} label={'About'} />
-                        <NavMenuItem handleClick={()=>{setOpen(false); handleMenuItemClick('gallery')}} label={'Gallery'} />
-                        <NavMenuItem handleClick={()=>{setOpen(false); handleMenuItemClick('roadmap')}} label={'Roadmap'} />
-                        <NavMenuItem handleClick={()=>{setOpen(false); handleMenuItemClick('team')}} label={'Team'} />
+                        <NavMenuItem handleClick={()=>setOpen(false)} label={'About'} />
+                        <NavMenuItem handleClick={()=>setOpen(false)} label={'Gallery'} />
+                        <NavMenuItem handleClick={()=>setOpen(false)} label={'Roadmap'} />
+                        <NavMenuItem handleClick={()=>setOpen(false)} label={'Team'} />
                         {/* <SocialSection style={{ margin: '0 auto' }} /> */}
                     </div>
                 </div>
@@ -69,27 +59,33 @@ const NavBar = ({ handleNavClick }) => {
     );
 };
 
-const NavMenuItem = ({ label, handleClick }) => {
-    const classes = useStyles()
-    return(
-        <span onClick={handleClick && handleClick} className={classes.menuItem}>{label}</span>
-    )
-
-}
+const NavMenuItem = ({ label, handleClick, path, style }) => {
+    const classes = useStyles();
+    return (
+      <Link
+        onClick={handleClick && handleClick}
+        style={style}
+        className={classes.menuItem}
+        to={path || ''}
+      >
+        {label}
+      </Link>
+    );
+  };
 
 const useStyles = makeStyles(theme => ({
     container: {
-        height: 126,
-        maxWidth: 1484,
-        display: 'flex',
         width: '100%',
+        maxWidth: 1400,
+        display: 'flex',
         zIndex: 999,
+        height: 99,
         [theme.breakpoints.down('sm')]:{
-            height: 96
+            height: 80
         }
     },
     appBar: {
-        backgroundColor: colors.primaryBlue,
+        backgroundColor: colors.black,
         boxShadow: 'none',
         zIndex: 990,
     },
@@ -104,7 +100,7 @@ const useStyles = makeStyles(theme => ({
     },
     mobileMenu: {
         height: '100vh',
-        backgroundColor: colors.primaryBlue,
+        backgroundColor: colors.red,
         width: '100%',
         display: 'flex',
         zIndex: 990,
@@ -139,13 +135,13 @@ const useStyles = makeStyles(theme => ({
         display: 'inline-block',
         paddingBottom: 3,
         textDecoration: 'none',
-        // textShadow: `0 0 3px ${colors.darkGrey}`,
         fontSize: 19,
+        fontFamily: fonts.Poppins,
         fontWeight: 500,
         color: colors.white,
         margin: '0px 12.5px',
         cursor: 'pointer',
-        backgroundImage: `linear-gradient(${colors.white}, ${colors.white}), linear-gradient(transparent, transparent)`,
+        backgroundImage: `linear-gradient(${colors.red}, ${colors.red}), linear-gradient(transparent, transparent)`,
         backgroundSize: '0 3px, auto',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center bottom',
