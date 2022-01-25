@@ -1,70 +1,262 @@
-# Getting Started with Create React App
+# Barak-S/cra-mui-boilerplate
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Development
 
-## Available Scripts
+Install dependencies:
 
-In the project directory, you can run:
+```
+npm install
+```
 
-### `yarn start`
+```
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [Style Guide](https://basarat.gitbook.io/jsx/styleguide)
+- [Do not use `null` if it is not required by some library](https://basarat.gitbook.io/jsx/recap/null-undefined).
+- Do not use `any`. Use `unknown` and type guards.
+- Do not use `enums`. Prefer to use `type IconType = 'times' | 'social';` instead. This will allows to omit extra import of types.
+- Do not use `function`. Prefer to use `const name () => {...}` instead.
 
-### `yarn test`
+### Procject structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `src/assets` - Global level assets. Use this folder for assets that will be reused several times. Do not place assets that will be used just once. Place this type of assets next to a component's file (`./assets`).
+- `src/components` - Folder for all pure components. The components inside this folder should not have dependencies on the API or app's storage.
+- `src/components/Common` - Basic wide-used components.
+- `src/components/Buttons` - Different basic buttons.
+- `src/components/Modals` - Basic dialogs and components.
+- `src/components/Form` - Inputs, special fields, form-related components.
+- `src/components/Auth|Dashboard|...` - Components related to a special (for example: authorized) part of the app.
+- `src/styles` - Everything that is related to the app style: theme, colors, fonts, utils, types.
+- `src/utils` - Basic utils for working with strings, dates, numbers, types. The utils here should not have dependencies from API or internal storage.
 
-### `yarn build`
+### Component names
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+We are using the following [React components naming convention](https://medium.com/@wittydeveloper/react-components-naming-convention-%EF%B8%8F-b50303551505).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Component's name structure:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+[Domain]|[Page/Context]|ComponentName|[Type]
+```
 
-### `yarn eject`
+Examples:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![Component name examples](docs/component-name-example.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Read more at the [original post](https://medium.com/@wittydeveloper/react-components-naming-convention-%EF%B8%8F-b50303551505).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Components import
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Each root folder is available globally and should be imported by absolute path.
 
-## Learn More
+✅ Correct:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+import { ContainedButton } from '@components/Buttons';
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+❌ Incorrect:
 
-### Code Splitting
+```jsx
+import { ContainedButton } from '../../components/Buttons';
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+### Files & folders structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**One component per file.** Each component should be placed in a separate folder. The source code should be placed at `index.jsx` file.
 
-### Making a Progressive Web App
+✅ Correct:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+src
+  components
+    Buttons
+      Submit
+        index.jsx
+```
 
-### Advanced Configuration
+❌ Incorrect:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+src
+  components
+    Buttons
+      ContainedButton.jsx
+```
 
-### Deployment
+Place assets in the `./assets` folder next to the component's file.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+✅ Correct:
 
-### `yarn build` fails to minify
+```
+src
+  components
+    Buttons
+      Submit
+        index.jsx
+        assets
+          logo.png
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+❌ Incorrect:
+
+```
+src
+  components
+    Buttons
+      Submit
+        index.jsx
+        logo.png
+```
+
+Place sub-components in the `./components` folder next to the component's file.
+
+✅ Correct:
+
+```
+src
+  components
+    Forms
+      List
+        index.jsx
+        components
+          Item
+            index.jsx
+```
+
+❌ Incorrect:
+
+```
+src
+  components
+    Forms
+      List
+        Item.jsx
+        index.jsx
+```
+
+The next files can be placed next to the `index.jsx` component's file to reduce the main file size:
+
+- `styles.js` - Use this file to keep component's styles if they are too big. But it is better to keep them in the same file if they fit on the same screen.
+- `types.js` - Component specific types, like `ListItem`, `IconType` etc. Do not keep the component's `Props` here. Keep it next to the component's code.
+- `utils.js` - Different utils required for the component.
+- `view.jsx` - Use this file for keeping component's view-related code if it is too big or the component is too complex.
+- `index.test.jsx`, `utils.test.js`, etc. - Tests files for the component and it's parts.
+
+Each root folder should contains `index.js` file and export all of it components. For example `src/components/Auth/index.js`:
+
+```jsx
+export * from './Copyrights';
+export * from './FormContainer';
+export * from './ScreenBackground';
+export * from './SocialLoginButtons';
+export * from './SectionSplitter';
+```
+
+This will allows to import components like:
+
+```jsx
+import { AuthCopyrights } from '@components/Auth';
+```
+
+### Component template
+
+The basic component template:
+
+```jsx
+import React from 'react';
+import { colors, fonts, ms } from '@styles';
+
+
+// Don't forget to export component to be able import it like:
+// import { AuthCopyrights } from 'components/Auht';
+export const AuthCopyrights = ({ style }) => {
+  return (
+    // Function ms() will merge style objects together
+    // The last style argument has takes the higher priority
+    // The defenition like m(styles.container, active && styles.active, style) is also valid
+    <div style={ms(styles.container, style)}>
+      {`Copyright © ${new Date().getFullYear()} All rights reserved.`}
+    </div>
+  );
+};
+
+// Place styles and themes at the bottom of the component
+// Use this definition of styles for main cases
+// Use makeStyle from @material-ui/core if you need more advanced customization (line 220)
+const styles = {
+  container: {
+    color: colors.gray,
+    fontSize: 16,
+  },
+};
+
+// Export default component at the bottom
+export default AuthCopyrights;
+```
+
+- Use `onClick` definition for the external event handlers, but `handleClick` for the internal.
+
+### Styles
+
+Main rules: [Airbnb CSS-in-JavaScript Style Guide]
+
+We are following the ["Airbnb CSS-in-JavaScript Style Guide"](https://github.com/airbnb/javascript/tree/master/css-in-javascript). Please take a look at it for the main CSS-in-JS style guides.
+
+We are using two types of style definition. Main time we are using simplified JSS:
+
+```jsx
+const styles = {
+  container: {
+    color: colors.gray,
+    fontSize: 16,
+  },
+};
+```
+
+If you will require media queries or more complex styles use `makeStyles()` provided by `@material-ui/core`:
+
+```jsx
+import { makeStyles, Paper, Theme, useTheme } from '@material-ui/core';
+import React, { FC } from 'react';
+import { StyleProps } from '@styles';
+
+type Props = StyleProps;
+
+export const AuthFormContainer: FC<Props> = ({ style, children }) => {
+  const theme = useTheme();
+  const classes = useStyles(theme);
+  return (
+    <Paper className={classes.container} style={style} elevation={2}>
+      {children}
+    </Paper>
+  );
+};
+
+const useStyles = (theme: Theme) =>
+  makeStyles({
+    container: {
+      padding: '45px 20px',
+      borderRadius: 30,
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      position: 'relative',
+      maxWidth: 740,
+
+      // For advanced breakpoint styling -> replaces @media queries
+      [theme.breakpoints.up('sm')]: {
+        padding: '45px 80px',
+      },
+    },
+  })();
+```
+
+Additional rules:
+
+- Use `container` name as the root style of the component.
+- Use `src/styles/theme.js` file to globaly customise MaterialUI components.
