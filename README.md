@@ -14,9 +14,6 @@ npm start
 
 
 - [Style Guide](https://basarat.gitbook.io/jsx/styleguide)
-- [Do not use `null` if it is not required by some library](https://basarat.gitbook.io/jsx/recap/null-undefined).
-- Do not use `any`. Use `unknown` and type guards.
-- Do not use `enums`. Prefer to use `type IconType = 'times' | 'social';` instead. This will allows to omit extra import of types.
 - Do not use `function`. Prefer to use `const name () => {...}` instead.
 
 ### Procject structure
@@ -41,11 +38,7 @@ Component's name structure:
 [Domain]|[Page/Context]|ComponentName|[Type]
 ```
 
-Examples:
-
-![Component name examples](docs/component-name-example.png)
-
-Read more at the [original post](https://medium.com/@wittydeveloper/react-components-naming-convention-%EF%B8%8F-b50303551505).
+Read more from this [original post](https://medium.com/@wittydeveloper/react-components-naming-convention-%EF%B8%8F-b50303551505).
 
 ### Components import
 
@@ -144,7 +137,6 @@ The next files can be placed next to the `index.jsx` component's file to reduce 
 - `types.js` - Component specific types, like `ListItem`, `IconType` etc. Do not keep the component's `Props` here. Keep it next to the component's code.
 - `utils.js` - Different utils required for the component.
 - `view.jsx` - Use this file for keeping component's view-related code if it is too big or the component is too complex.
-- `index.test.jsx`, `utils.test.js`, etc. - Tests files for the component and it's parts.
 
 Each root folder should contains `index.js` file and export all of it components. For example `src/components/Auth/index.js`:
 
@@ -173,6 +165,7 @@ import { colors, fonts, ms } from '@styles';
 
 // Don't forget to export component to be able import it like:
 // import { AuthCopyrights } from 'components/Auht';
+
 export const AuthCopyrights = ({ style }) => {
   return (
     // Function ms() will merge style objects together
@@ -221,12 +214,9 @@ If you will require media queries or more complex styles use `makeStyles()` prov
 
 ```jsx
 import { makeStyles, Paper, Theme, useTheme } from '@material-ui/core';
-import React, { FC } from 'react';
-import { StyleProps } from '@styles';
+import React from 'react';
 
-type Props = StyleProps;
-
-export const AuthFormContainer: FC<Props> = ({ style, children }) => {
+export const AuthFormContainer = ({ style, children }) => {
   const theme = useTheme();
   const classes = useStyles(theme);
   return (
@@ -236,7 +226,7 @@ export const AuthFormContainer: FC<Props> = ({ style, children }) => {
   );
 };
 
-const useStyles = (theme: Theme) =>
+const useStyles = (theme) =>
   makeStyles({
     container: {
       padding: '45px 20px',
