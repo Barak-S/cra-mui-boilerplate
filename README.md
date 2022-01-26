@@ -1,5 +1,7 @@
 # Barak-S/cra-mui-boilerplate
 
+### A create-react-app + @material-ui/core boilerplate
+
 ## Development
 
 Install dependencies:
@@ -160,18 +162,17 @@ The basic component template:
 
 ```jsx
 import React from 'react';
-import { colors, fonts, ms } from '@styles';
-
+import { colors, fonts } from '@styles';
+import classNames from 'classnames';
 
 // Don't forget to export component to be able import it like:
-// import { AuthCopyrights } from 'components/Auht';
+// import { AuthCopyrights } from 'components/Auth';
 
-export const AuthCopyrights = ({ style }) => {
+export const AuthCopyrights = ({ style, className }) => {
   return (
-    // Function ms() will merge style objects together
-    // The last style argument has takes the higher priority
-    // The defenition like m(styles.container, active && styles.active, style) is also valid
-    <div style={ms(styles.container, style)}>
+    // Function classNames() will merge class objects together
+    // The last className argument will takes the higher priority
+    <div className={classNames(classes.container, className)}>
       {`Copyright © ${new Date().getFullYear()} All rights reserved.`}
     </div>
   );
