@@ -1,9 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { Container, useMediaQuery, useTheme } from '@material-ui/core';
-import { colors, fonts } from '../../styles';
-// import Logo from '../../assets/images/logo.png';
-// import SocialSection from '../../components';
+import { colors, fonts } from '@styles';
+import SocialSection from '@components/SocialSection';
 const pack = require('../../../package.json');
 
 const CommonFooter = () => {
@@ -14,9 +13,12 @@ const CommonFooter = () => {
     <div className={classes.footer}>
         <Container className={classes.container}>
             <div className={classes.footerBar}>
-                {/* <img src={Logo} className={classes.logo} /> */}
                 <p className={classes.footerText}>{`© ${new Date().getFullYear()}, Barak's MUI - CRA Template`}</p> 
-                {/* <SocialSection /> */}
+                <SocialSection 
+                  color={colors.white} 
+                  size={20} 
+                  className={classes.socialSection} 
+                />
             </div>
         </Container>
     </div>
@@ -28,7 +30,11 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     maxWidth: 1400,
     display: 'flex',
+    position: 'relative',
     height: 40,
+    [theme.breakpoints.down('sm')]: {
+      height: 76,
+    },
   },
   footer: {
     backgroundColor: colors.red,
@@ -43,14 +49,28 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     height: '100%',
     [theme.breakpoints.down('sm')]:{
-      flexDirection: 'column',
-      justifyContent: 'flex-start'
+      flexDirection: 'column-reverse',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
     }
   },
   footerText: {
     color: colors.white,
     fontFamily: fonts.Poppins,
+    [theme.breakpoints.down('sm')]:{
+      marginTop: 0,
+    }
   },
+  socialSection: {
+    width: 180, 
+    height: 40, 
+    position: 'absolute', 
+    right: 12,
+    [theme.breakpoints.down('sm')]: {
+      position: 'relative',
+      right: 0,
+    }
+  }
 }))
 
 export default CommonFooter

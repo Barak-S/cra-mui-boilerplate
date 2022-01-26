@@ -1,11 +1,11 @@
 import { MuiThemeProvider, makeStyles } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import theme from './assets/theme';
-import { routes } from './core';
+import theme from '@assets/theme';
+import { routes } from '@core';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import Navbar from './layout/Navbar';
-import Footer from './layout/Footer';
-import Home from './screens/Home';
+import Navbar from '@layout/Navbar';
+import Footer from '@layout/Footer';
+import Home from '@screens/Home';
 import './App.css';
 
 

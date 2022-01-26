@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Container, useMediaQuery, useTheme } from '@material-ui/core';
-import { colors, fonts } from '../../styles';
+import { colors, fonts } from '@styles';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { useHistory, Link } from 'react-router-dom';
-import { routes } from '../../core';
+import { routes } from '@core';
 // import Logo from '../../assets/images/logo.png';
-// import SocialSection from '../../components';
+import SocialSection from '@components/SocialSection';
 
 
 const NavBar = () => {
@@ -34,11 +34,13 @@ const NavBar = () => {
                             }} 
                         /> */}
                     <div className={classes.linkSection}>
-                        <NavMenuItem label={'About'} />
-                        <NavMenuItem label={'Gallery'} />
-                        <NavMenuItem label={'Roadmap'} />
-                        <NavMenuItem label={'Team'} />
-                        {/* <SocialSection style={{ marginLeft: 62 }} /> */}
+                        <div className={classes.socialWrapper}>
+                            <NavMenuItem label={'About'} />
+                            <NavMenuItem label={'Gallery'} />
+                            <NavMenuItem label={'Roadmap'} />
+                            <NavMenuItem label={'Team'} />
+                        </div>
+                        <SocialSection style={{ marginLeft: 62 }} />
                     </div>
                 </div>
             </Container>
@@ -120,6 +122,8 @@ const useStyles = makeStyles(theme => ({
     linkSection :{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
         [theme.breakpoints.down('sm')]:{
             display: 'none'
         }
@@ -156,6 +160,9 @@ const useStyles = makeStyles(theme => ({
             color: colors.white,
             textShadow: 'none'
         }
+    },
+    socialWrapper: {
+        display: 'flex'
     }
 
   }))
