@@ -14,6 +14,14 @@ npm install
 npm start
 ```
 
+### Pushing to a new Repo
+
+```
+git remote add origin URL_TO_GITHUB_REPO
+```
+```
+git push -u origin master
+```
 
 - [Style Guide](https://basarat.gitbook.io/jsx/styleguide)
 - Do not use `function`. Prefer to use `const name () => {...}` instead.
